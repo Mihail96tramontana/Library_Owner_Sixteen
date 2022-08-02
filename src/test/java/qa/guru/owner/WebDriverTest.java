@@ -1,54 +1,26 @@
-package qa.guru.owner;
+package owner.config;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class WebDriverTest {
 
-    WebDriver driver = getDriver();
+    private WebDriver driver;
 
     @BeforeEach
     public void startDriver() {
-        driver = getDriver();
+        driver = new owner.config.WebDriverProvider().get();
     }
 
-
-
+    @Tag("tests_config")
     @Test
-        public void testGithub1() {
-        // Подготовка Driver
-            WebDriver driver = getDriver();
-            // Тело выполнение теста
-            String title = driver.getTitle();
-            assertEquals("GitHub: Where the world builds software · GitHub", title);
-            driver.quit();
-        }
-
-        @Test
-    public void testGithub2() {
-        WebDriver driver = getDriver();
+    public void testGitHub() {
         String title = driver.getTitle();
         assertEquals("GitHub: Where the world builds software · GitHub", title);
         driver.quit();
-
-    }
-
-@AfterEach
-    public void stopDriver() {
-        driver.quit();
-    }
-
-    // Конфигурация
-    private WebDriver getDriver() {
-        WebDriverManager.chromedriver().setup();
-        WebDriver driver = new ChromeDriver();
-        driver.get("https://github.com");
-        return driver;
     }
 }
